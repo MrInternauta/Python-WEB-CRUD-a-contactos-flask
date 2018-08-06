@@ -1,0 +1,49 @@
+Configurando el entorno de desarrollo de Google Cloud
+
+Descargar el DSK de AppEngine para Python https://cloud.google.com/appengine/downloads
+
+Descomprimirlo
+
+Abrir la consola, ir a la carpeta donde lo descomprimimos, ejecutar el comando ./install.sh
+
+Reiniciar la consola (Abriéndola nuevamente)
+
+Generar una serie de archivos para que GCloud sepa cómo correrlo
+
+app.yml: Qué ambiente vamos a necesitar, y a dónde va a enviar el tráfico.
+appengine_config.py: Dónde se encuentran las librerías que instalamos con pip, google no corre ese comando, por lo que debemos subir las librerías. Este archivo lleva por código:
+from google.appengine.ext import vendor
+vendor.add(‘lib’) #Donde lib es la carpeta donde guardaremos las librerías.
+Crear un folder /lib para guardar las librerías (en el proyecto actual)
+
+Abrir consola, movernos a nuestro folder del proyecto actual
+
+Iniciar ambiente virtual: source venv/bin/activate
+
+Instalar requirements.txt en este folder (pip install -r requirements.txt -t lib)
+
+-t lib significa que ese es el directorio destino donde las instalará
+Indicar en app.yaml
+
+Ambiente a utilizar (python 27 es Python 2.7)
+Hacia dónde tiene qué mandar el tráfico
+script: main.app (módulo main, variable app)
+O sea en el main.py, en la variable app = Flask(name)
+Correr el servidor local: dev_appserver.py .
+
+Poner un punto al final, significa que el archivo yaml está en el mismo directorio
+Instalar las extensiones cuando nos lo pregunte.
+Subir el archivo a internet
+
+Entrar a console.cloud.google.com
+Crear un Proyecto
+Ir al menú App Engine (barra lateral izq)
+Escoger el lenguaje de nuestra aplicación.
+Autenticarnos con Google desde la consola
+
+Ejecutar comando: glocud auth loggin
+Autenticarnos en la ventana emergente.
+Hacer deploy de la aplicación
+
+Ejecutar comando: gcloud app deploy —proyect [projectid]
+Después de eso nos dirá la URL donde se deployó .
